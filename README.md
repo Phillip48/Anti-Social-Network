@@ -23,7 +23,7 @@ Type...
 
 In order to accomplish the challenge, the following steps were done:  
 
-* Type...  
+* I brainstormed where to start and how to go about it.
 
 
 ## Usage
