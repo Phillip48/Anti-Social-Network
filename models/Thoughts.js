@@ -6,12 +6,23 @@ const dateFormat = require('../utils/dateFormat');
 // Schema to create a course model
 const thoughtSchema = new Schema(
     {
-        thoughtPost: {
-
+        thoughtText: {
+            type: String,
+            required: true,
+            min: 1,
+            max: 280
         },
         createdAt: {
-            get: timestamp => dateFormat(timestamp)
-        }
+            type: Date,
+            default: Date.now,
+        },
+        username: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            }
+        ],
+        reaction: [reactionsSchema]
     },
     {
         toJSON: {
