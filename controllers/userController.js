@@ -1,12 +1,10 @@
 const { ObjectId } = require('mongoose').Types;
-const { User, friends } = require('../models');
+const { User, Thoughts } = require('../models');
 
-const friendCount = async () => {
-    friends.aggregate()
-    .count('friendCount')
+const friendCount = async () => 
+    User.aggregate()
+    .count('userFriends')
     .then((numberOfFriends) => numberOfFriends);
-};
-
 
 
 const userController = {
@@ -17,7 +15,7 @@ const userController = {
             .then(async (users) => {
                 const userObj = {
                     users,
-                    friendCount: await friendCount(),
+                    userCount: await friendCount(),
                 };
                 return res.json(userObj);
             })
@@ -36,7 +34,7 @@ const userController = {
                     : res.json({
                         user,
                         // ????
-                        _id: await friendCount(req.params._id),
+                        friendCount: await friendCount(),
                         // ????
                     })
             )
