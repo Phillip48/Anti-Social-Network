@@ -1,7 +1,7 @@
 const { Timestamp } = require('bson');
 const { Schema, model } = require('mongoose');
 const reactionsSchema = require('./Reactions');
-const dateFormat = require('../utils/dateFormat');
+// const dateFormat = require('../utils/dateFormat');
 
 // Schema to create a course model
 const thoughtSchema = new Schema(

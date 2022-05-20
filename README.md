@@ -10,27 +10,29 @@
 -[Contributors](#Contributors)  
 
 ## Description  
-Type...
+MongoDB is a popular choice for many social networks due to its speed with large amounts of data and flexibility with unstructured data. With this project the goal was to create a social API using monogoose and mongoDB. In this API users can share their thoughts, react to friends’ thoughts, and create a friend list.
 
 ## The Project
+```md
+AS A social media startup
+I WANT an API for my social network that uses a NoSQL database
+SO THAT my website can handle large amounts of unstructured data
+```
 
-Type...
-
-- [x] Type...  
-- [x] Type...  
+- [x] When the server is started and the Mongoose models are synced to the MongoDB database  
+- [x] When open i API GET routes in Insomnia for users and thoughts then the data for each of these routes is displayed in a formatted JSON  
+- [x] When I do an API POST, PUT, and DELETE routes in Insomnia then I am able to successfully create, update, and delete users and thoughts in my database  
+- [x] When I do an API POST and DELETE routes in Insomnia then I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s list
 
 ## The development process
 
 In order to accomplish the challenge, the following steps were done:  
 
 * I brainstormed where to start and how to go about it.
-
-
-## Usage
-
-**User Story**
-
-As the user I...  Type...
+* Used the models in the Readme
+* Used the mongoose docs and class examples
+* Followed the acceptance criteria
+* Used insomnia 
   
 ## Images  
 ![Img 1]()  
