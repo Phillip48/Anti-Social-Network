@@ -26,7 +26,7 @@ const userController = {
     },
     // get one 
     getSingleUser(req, res) {
-        User.findOne({ _id: req.params._id })
+        User.findOne({ _id: req.params.userId })
             .select('-__v')
             .then(async (user) =>
                 !user
@@ -34,7 +34,7 @@ const userController = {
                     : res.json({
                         user,
                         // ????
-                        friendCount: await friendCount(),
+                        // friendCount: await friendCount(),
                         // ????
                     })
             )
@@ -51,13 +51,13 @@ const userController = {
     },
     // delete user
       deleteUser(req, res) {
-        User.findOneAndRemove({ _id: req.params._id })
+        User.findOneAndRemove({ _id: req.params.userId })
           .then((user) =>
             !user
               ? res.status(404).json({ message: 'No such user exists' })
               : Course.findOneAndUpdate(
                   { users: req.params._id },
-                  { $pull: { users: req.params._id } },
+                  { $pull: { users: req.params.userId } },
                   { new: true }
                 )
           )
@@ -92,8 +92,8 @@ const userController = {
         console.log('You are adding a new friend');
         console.log(req.body);
         User.findOneAndUpdate(
-          { _id: req.params._id },
-          { $addToSet: { friends: req.body } },
+          { _id: req.params.userId },
+          { $addToSet: { friends: req.params.friendId } },
           { runValidators: true, new: true }
         )
           .then((user) =>
@@ -107,12 +107,14 @@ const userController = {
       },
       // delete a new friend because they can live by themselves =)
       removeFriend(req, res) {
+        console.log('You are deleting a friend');
         User.findOneAndUpdate(
-          { _id: req.params._id },
-          { $pull: { friends: { friendsId: req.params.friendsId } } },
+          { _id: req.params.userId },
+          { $pull: { friends: { $in: req.params.friendId } } },
           { runValidators: true, new: true }
         )
           .then((user) =>
+
             !user
               ? res
                   .status(404)
