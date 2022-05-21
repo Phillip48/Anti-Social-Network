@@ -14,15 +14,15 @@ const {
 router.route('/').get(getThoughts).post(createThought);
 
 // /api/thoughts/:thoughtsID
-router.route('/:thoughtsID').get(getSingleThought).delete(deleteThought);
+router.route('/:thoughtsId').get(getSingleThought).delete(deleteThought);
 
 // /api/thoughts/:thoughtsID
-router.route('/:thoughtsID').get(getSingleThought).put(updateThought).delete(deleteThought);
+router.route('/:thoughtsId').get(getSingleThought).put(updateThought).delete(deleteThought);
 
 // /api/thoughts/:thoughtsID/reactions
 router.route('/:thoughtsID/reactions').post(addReaction);
 
 // /api/thoughts/:thoughtsID/reactions/:friendId
-router.route('/:thoughtsID/reactions/:friendId').delete(removeReaction);
+router.route('/:thoughtsID/reactions/:userId').delete(removeReaction);
 
 module.exports = router;

@@ -55,18 +55,18 @@ const userController = {
           .then((user) =>
             !user
               ? res.status(404).json({ message: 'No such user exists' })
-              : Course.findOneAndUpdate(
+              : Thoughts.findOneAndUpdate(
                   { users: req.params._id },
-                  { $pull: { users: req.params.userId } },
+                  { $pull: { $in: req.params.userId } },
                   { new: true }
                 )
           )
-          .then((course) =>
-            !course
+          .then((thoughts) =>
+            !thoughts
               ? res.status(404).json({
-                  message: 'Student deleted, but no courses found',
+                  message: 'User deleted, but no thoughts found',
                 })
-              : res.json({ message: 'Student successfully deleted' })
+              : res.json({ message: 'User successfully deleted' })
           )
           .catch((err) => {
             console.log(err);
