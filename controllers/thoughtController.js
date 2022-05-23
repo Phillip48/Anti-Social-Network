@@ -72,7 +72,7 @@ const thoughtController = {
       // update thought
       updateThought(req, res) {
         Thoughts.findOneAndUpdate(
-          { _id: req.params.userId },
+          { _id: req.params.thoughtsId },
           { $set: req.body },
           { runValidators: true, new: true }
         )
@@ -88,7 +88,7 @@ const thoughtController = {
         console.log('You are adding a new reaction');
         console.log(req.body);
         Thoughts.findOneAndUpdate(
-          { _id: req.params.userId },
+          { _id: req.params.thoughtsId },
           { $addToSet: { reaction: req.params.reactionId } },
           { runValidators: true, new: true }
         )
@@ -97,14 +97,14 @@ const thoughtController = {
               ? res
                   .status(404)
                   .json({ message: 'No thought found with that ID :(' })
-              : res.json(thought)
+              : res.json(Reactions)
           )
           .catch((err) => res.status(500).json(err));
       },
       // delete a new friend because they can live by themselves =)
       removeReaction(req, res) {
         Thoughts.findOneAndUpdate(
-          { _id: req.params._id },
+          { _id: req.params.thoughtsId },
           { $pull: { friends: { reactionID: req.params.reactionId } } },
           { runValidators: true, new: true }
         )
@@ -113,7 +113,7 @@ const thoughtController = {
               ? res
                   .status(404)
                   .json({ message: 'No thought found with that ID :(' })
-              : res.json(thought)
+              : res.json(Reactions)
           )
           .catch((err) => res.status(500).json(err));
       },

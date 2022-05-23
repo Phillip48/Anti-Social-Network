@@ -20,9 +20,9 @@ router.route('/:thoughtsId').get(getSingleThought).delete(deleteThought);
 router.route('/:thoughtsId').get(getSingleThought).put(updateThought).delete(deleteThought);
 
 // /api/thoughts/:thoughtsID/reactions
-router.route('/:thoughtsID/reactions').post(addReaction);
+router.route('/:thoughtsId/reactions').post(addReaction);
 
 // /api/thoughts/:thoughtsID/reactions/:friendId
-router.route('/:thoughtsID/reactions/:userId').delete(removeReaction);
+router.route('/:thoughtsId/reactions/:userId').delete(removeReaction);
 
 module.exports = router;
