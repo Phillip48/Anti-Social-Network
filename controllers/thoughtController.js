@@ -1,8 +1,8 @@
 const { Thoughts, Reactions } = require('../models');
 
-const reactionCount = async () =>
+const thoughtCount = async () =>
   Thoughts.aggregate()
-    .count('reactionCount')
+    .count('thoughtCount')
     .then((numberOfThougts) => numberOfThougts);
 
 const thoughtController = {
@@ -13,7 +13,7 @@ const thoughtController = {
             .then(async (thoughts) => {
                 const thoughtObj = {
                     thoughts,
-                    reactionCount: await reactionCount(),
+                    thoughtCount: await thoughtCount(),
                 };
                 return res.json(thoughtObj);
             })
@@ -53,7 +53,7 @@ const thoughtController = {
               ? res.status(404).json({ message: 'No such thought exists' })
               : Thoughts.findOneAndUpdate(
                   { thoughts: req.params._id },
-                  { $pull: { $in: req.params.thoughtsId} },
+                  { $pull: { thoughtsId: req.params.thoughtsId} },
                   { new: true }
                 )
           )
@@ -86,10 +86,9 @@ const thoughtController = {
       // post a new friend because theyre lonely and cant live by themselves 
       addReaction(req, res) {
         console.log('You are adding a new reaction');
-        console.log(req.body);
         Thoughts.findOneAndUpdate(
           { _id: req.params.thoughtsId },
-          { $addToSet: { reaction: req.params.reactionId } },
+          { $addToSet: { reaction: req.body } },
           { runValidators: true, new: true }
         )
           .then((thought) =>
@@ -97,7 +96,7 @@ const thoughtController = {
               ? res
                   .status(404)
                   .json({ message: 'No thought found with that ID :(' })
-              : res.json(Reactions)
+              : res.json(thought)
           )
           .catch((err) => res.status(500).json(err));
       },
@@ -105,7 +104,7 @@ const thoughtController = {
       removeReaction(req, res) {
         Thoughts.findOneAndUpdate(
           { _id: req.params.thoughtsId },
-          { $pull: { friends: { reactionID: req.params.reactionId } } },
+          { $pull: { reactions: { reactionId: req.body.reactionId } } },
           { runValidators: true, new: true }
         )
           .then((thought) =>
@@ -113,7 +112,7 @@ const thoughtController = {
               ? res
                   .status(404)
                   .json({ message: 'No thought found with that ID :(' })
-              : res.json(Reactions)
+              : res.json({ message: 'Reaction deleted' })
           )
           .catch((err) => res.status(500).json(err));
       },
