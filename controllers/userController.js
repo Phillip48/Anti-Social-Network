@@ -76,7 +76,7 @@ const userController = {
       // update user
       updateUser(req, res) {
         User.findOneAndUpdate(
-          { _id: req.params._id },
+          { _id: req.params.userId },
           { $set: req.body },
           { runValidators: true, new: true }
         )

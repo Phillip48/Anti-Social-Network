@@ -24,15 +24,13 @@ const thoughtController = {
     },
     // get one 
     getSingleThought(req, res) {
-        Thoughts.findOne({ _id: req.params.userId })
+        Thoughts.findOne({ _id: req.params.thoughtsId })
             .select('-__v')
             .then(async (thought) =>
                 !thought
                     ? res.status(404).json({ message: 'No thought with that ID' })
                     : res.json({
                         thought,
-                        // ????
-                        _id: await friendCount(req.params.userId),
                         // ????
                     })
             )
